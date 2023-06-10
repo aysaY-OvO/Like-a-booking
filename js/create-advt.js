@@ -2,11 +2,9 @@ import { dataArray } from './data.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-const renderOffer = (data) => {
+const renderOffer = ({ author, offer }) => {
   const advt = cardTemplate.cloneNode(true);
-  const { author, offer } = data[0];
 
-  // data.forEach(({ author, offer }) => {
   advt.querySelector('.popup__avatar').src = author.avatar;
   advt.querySelector('.popup__title').textContent = offer.title;
   advt.querySelector('.popup__text--address').textContent = offer.address;
@@ -61,11 +59,16 @@ const renderOffer = (data) => {
   };
   createPhotos(offer.photos);
   createFeatures(offer.features);
-  // });
 
   return document.querySelector('.map__canvas').appendChild(advt);
 };
 
-renderOffer(dataArray);
+const dataParse = (dataArray) => {
+  dataArray.forEach(data => {
+    return renderOffer(data);
+  });
+};
+
+dataParse(dataArray);
 
 export { renderOffer };
