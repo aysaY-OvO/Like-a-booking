@@ -1,5 +1,3 @@
-import { dataArray } from './data.js';
-
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const renderOffer = ({ author, offer }) => {
@@ -60,15 +58,7 @@ const renderOffer = ({ author, offer }) => {
   createPhotos(offer.photos);
   createFeatures(offer.features);
 
-  return document.querySelector('.map__canvas').appendChild(advt);
+  return advt;
 };
-
-const dataParse = (dataArray) => {
-  dataArray.forEach(data => {
-    return renderOffer(data);
-  });
-};
-
-dataParse(dataArray);
 
 export { renderOffer };

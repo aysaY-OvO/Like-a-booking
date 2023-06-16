@@ -59,12 +59,12 @@ const createData = () => {
       photos: getPhotos(),
     },
     location: {
-      x: getRandomFloating(35.65000, 35.70000, 5),
-      y: getRandomFloating(139.70000, 139.80000, 5),
+      lat: getRandomFloating(35.65000, 35.70000, 5),
+      lng: getRandomFloating(139.70000, 139.80000, 5),
     },
   };
 
-  data.offer.address = `${data.location.x}, ${data.location.y}`;
+  data.offer.address = `${data.location.lat}, ${data.location.lng}`;
 
   return data;
 };
