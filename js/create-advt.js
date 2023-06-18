@@ -3,7 +3,11 @@ const cardTemplate = document.querySelector('#card').content.querySelector('.pop
 const renderOffer = ({ author, offer }) => {
   const advt = cardTemplate.cloneNode(true);
 
-  advt.querySelector('.popup__avatar').src = author.avatar;
+  try {
+    advt.querySelector('.popup__avatar').src = author.avatar;
+  } catch (error) {
+    advt.querySelector('.popup__avatar').src = '../img/avatars/';
+  }
   advt.querySelector('.popup__title').textContent = offer.title;
   advt.querySelector('.popup__text--address').textContent = offer.address;
   advt.querySelector('.popup__text--price').innerHTML = `${offer.price} <span>₽/ночь</span>`;
@@ -12,18 +16,22 @@ const renderOffer = ({ author, offer }) => {
   advt.querySelector('.popup__description ').textContent = offer.description;
 
   //Create photos
-  const createPhotos = (photos) => {
+  const getPhotos = (photos) => {
     const photosWrapper = advt.querySelector('.popup__photos');
-    photos.forEach(photo => {
-      return photosWrapper.insertAdjacentHTML(
-        'beforeend',
-        `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья"></div>`,
-      );
-    });
+    try {
+      photos.forEach(photo => {
+        return photosWrapper.insertAdjacentHTML(
+          'beforeend',
+          `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья"></div>`,
+        );
+      });
+    } catch (error) {
+      photosWrapper.style.display = 'none';
+    }
   };
 
   //Create type
-  const createType = (type) => {
+  const getType = (type) => {
     let equal;
     switch (type) {
       case 'flat':
@@ -38,25 +46,32 @@ const renderOffer = ({ author, offer }) => {
       case 'palace':
         equal = 'Дворец';
         break;
+      case 'hotel':
+        equal = 'Отель';
+        break;
       default:
         equal = 'Не определено';
     }
     return advt.querySelector('.popup__type').textContent = equal;
   };
-  createType(offer.type);
+  getType(offer.type);
 
   //Create features
-  const createFeatures = (features) => {
+  const getFeatures = (features) => {
     const featuresWrapper = advt.querySelector('.popup__features');
-    features.forEach(feature => {
-      return featuresWrapper.insertAdjacentHTML(
-        'beforeend',
-        `<li class="popup__feature popup__feature--${feature}"></li>`,
-      );
-    });
+    try {
+      features.forEach(feature => {
+        return featuresWrapper.insertAdjacentHTML(
+          'beforeend',
+          `<li class="popup__feature popup__feature--${feature}"></li>`,
+        );
+      });
+    } catch (error) {
+      return featuresWrapper.style.display = 'none';
+    }
   };
-  createPhotos(offer.photos);
-  createFeatures(offer.features);
+  getPhotos(offer.photos);
+  getFeatures(offer.features);
 
   return advt;
 };

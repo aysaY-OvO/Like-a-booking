@@ -1,3 +1,6 @@
+import { showErrorMessage } from './alerts.js';
+import { sendData } from './api.js';
+
 const adForm = document.querySelector('.ad-form'),
   typeOfHousing = adForm.querySelector('#type'),
   costPerNight = adForm.querySelector('#price'),
@@ -194,3 +197,18 @@ roomNumber.addEventListener('change', () => {
   }
   roomNumber.reportValidity();
 });
+
+//Form post
+const setUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    sendData(
+      () => onSuccess(),
+      () => showErrorMessage(),
+      formData,
+    );
+  });
+};
+
+export { setUserFormSubmit };
