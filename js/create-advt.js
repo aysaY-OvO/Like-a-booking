@@ -3,11 +3,15 @@ const cardTemplate = document.querySelector('#card').content.querySelector('.pop
 const renderOffer = ({ author, offer }) => {
   const advt = cardTemplate.cloneNode(true);
 
-  try {
-    advt.querySelector('.popup__avatar').src = author.avatar;
-  } catch (error) {
-    advt.querySelector('.popup__avatar').src = '../img/avatars/';
-  }
+  const getAvatar = (avatar = author.avatar) => {
+    advt.querySelector('.popup__avatar').src = avatar;
+    const avatarNumber = avatar.match(/(-?\d+(\.\d+)?)/g).map(v => +v);
+    if (avatarNumber >= 8) {
+      advt.querySelector('.popup__avatar').src = '../img/avatars/default.png';
+    }
+  };
+  getAvatar();
+
   advt.querySelector('.popup__title').textContent = offer.title;
   advt.querySelector('.popup__text--address').textContent = offer.address;
   advt.querySelector('.popup__text--price').innerHTML = `${offer.price} <span>₽/ночь</span>`;

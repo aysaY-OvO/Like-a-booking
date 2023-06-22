@@ -50,10 +50,14 @@ const mainPinMarker = L.marker(
     icon: mainPinIcon,
   },
 );
-const latLng = mainPinMarker.getLatLng();
-const lat = latLng.lat;
-const lng = latLng.lng;
-addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+
+const setMainPinMarker = () => {
+  const latLng = mainPinMarker.getLatLng();
+  const lat = latLng.lat;
+  const lng = latLng.lng;
+  addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+};
+setMainPinMarker();
 
 mainPinMarker.addTo(map)
   .on('move', (evt) => {
@@ -64,31 +68,26 @@ mainPinMarker.addTo(map)
   });
 
 //Similar offers pins
-const renderSimilarAdvts = () => {
-  const ADVT_MARKERS_COUNT = 10;
-  fetch('https://23.javascript.pages.academy/keksobooking/data')
-    .then((response) => response.json())
-    .then((data) => {
-      data.slice(0, ADVT_MARKERS_COUNT).forEach(item => {
-        const { lat, lng } = item.location;
-        const marker = L.marker(
-          {
-            lat,
-            lng,
-          },
-          {
-            icon: pinIcon,
-          },
-          {
-            keepInView: true,
-          },
-        );
+const createPins = (offer) => {
+  const { lat, lng } = offer.location;
+  const marker = L.marker(
+    {
+      lat,
+      lng,
+    },
+    {
+      icon: pinIcon,
+    },
+    {
+      keepInView: true,
+    },
+  );
 
-        marker.addTo(map)
-          .bindPopup(
-            renderOffer(item),
-          );
-      });
-    });
+  marker.addTo(map)
+    .bindPopup(
+      renderOffer(offer),
+    );
+
 };
-renderSimilarAdvts();
+
+export { setMainPinMarker, createPins };
