@@ -10,8 +10,6 @@ const ADVT_MARKERS_COUNT = 10;
 
 setUserFormSubmit(showSuccessMessage);
 getData((offers) => {
-  // createPins(offers.slice(0, ADVT_MARKERS_COUNT));
-  // console.log(offers);
   offers.slice(0, ADVT_MARKERS_COUNT).forEach(offer => {
     createPins(offer);
   });
