@@ -10,16 +10,12 @@ const renderOffer = ({ author, offer }) => {
       advt.querySelector('.popup__avatar').src = '../img/avatars/default.png';
     }
   };
-  getAvatar();
-
   advt.querySelector('.popup__title').textContent = offer.title;
   advt.querySelector('.popup__text--address').textContent = offer.address;
   advt.querySelector('.popup__text--price').innerHTML = `${offer.price} <span>₽/ночь</span>`;
   advt.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   advt.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   advt.querySelector('.popup__description ').textContent = offer.description;
-
-  //Create photos
   const getPhotos = (photos) => {
     const photosWrapper = advt.querySelector('.popup__photos');
     try {
@@ -33,8 +29,6 @@ const renderOffer = ({ author, offer }) => {
       photosWrapper.style.display = 'none';
     }
   };
-
-  //Create type
   const getType = (type) => {
     let equal;
     switch (type) {
@@ -58,9 +52,6 @@ const renderOffer = ({ author, offer }) => {
     }
     return advt.querySelector('.popup__type').textContent = equal;
   };
-  getType(offer.type);
-
-  //Create features
   const getFeatures = (features) => {
     const featuresWrapper = advt.querySelector('.popup__features');
     try {
@@ -74,9 +65,10 @@ const renderOffer = ({ author, offer }) => {
       return featuresWrapper.style.display = 'none';
     }
   };
+  getAvatar();
+  getType(offer.type);
   getPhotos(offer.photos);
   getFeatures(offer.features);
-
   return advt;
 };
 

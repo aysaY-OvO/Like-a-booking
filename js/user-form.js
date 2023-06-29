@@ -219,4 +219,6 @@ const clearUserForm = () => {
   setMainPinMarker();
 };
 
+//Map filters
+
 export { setUserFormSubmit };

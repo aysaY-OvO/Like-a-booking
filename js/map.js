@@ -67,9 +67,17 @@ mainPinMarker.addTo(map)
     addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
   });
 
-//Similar offers pins
-const createPins = (offer) => {
-  const { lat, lng } = offer.location;
+// const getLatLng = (data) => {
+//   let location;
+//   data.forEach(item => {
+//     location = item.location;
+//   });
+//   return location;
+// };
+
+//Offers pins
+const createPins = (offers) => {
+  const { lat, lng } = offers.location;
   const marker = L.marker(
     {
       lat,
@@ -85,7 +93,7 @@ const createPins = (offer) => {
 
   marker.addTo(map)
     .bindPopup(
-      renderOffer(offer),
+      renderOffer(offers),
     );
 
 };
