@@ -1,6 +1,5 @@
 import { showErrorMessage } from './alerts.js';
 import { sendData } from './api.js';
-import { setMainPinMarker } from './map.js';
 
 const adForm = document.querySelector('.ad-form'),
   typeOfHousing = adForm.querySelector('#type'),
@@ -216,9 +215,6 @@ const setUserFormSubmit = (onSuccess) => {
 
 const clearUserForm = () => {
   adForm.reset();
-  setMainPinMarker();
 };
 
-//Map filters
-
-export { setUserFormSubmit };
+export { setUserFormSubmit, clearUserForm };

@@ -5,9 +5,11 @@ const renderOffer = ({ author, offer }) => {
 
   const getAvatar = (avatar = author.avatar) => {
     advt.querySelector('.popup__avatar').src = avatar;
-    const avatarNumber = avatar.match(/(-?\d+(\.\d+)?)/g).map(v => +v);
-    if (avatarNumber >= 8) {
-      advt.querySelector('.popup__avatar').src = '../img/avatars/default.png';
+    if (avatar !== 'img/avatars/default.png') {
+      const avatarNumber = author.avatar.match(/(-?\d+(\.\d+)?)/g).map(num => +num);
+      if (avatarNumber >= 8) {
+        advt.querySelector('.popup__avatar').src = '../img/avatars/default.png';
+      }
     }
   };
   advt.querySelector('.popup__title').textContent = offer.title;

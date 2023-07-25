@@ -1,11 +1,13 @@
 import { activeState, inActiveState } from './page-state.js';
 import { renderOffer } from './create-advt.js';
+// import { getData } from './api.js';
 
 const adForm = document.querySelector('.ad-form'),
   mapFilters = document.querySelector('.map__filters'),
   addressInput = adForm.querySelector('#address');
 
 const L = window.L;
+const ADVT_MARKERS_COUNT = 10;
 
 const map = L.map('map-canvas');
 inActiveState(adForm);
@@ -67,35 +69,47 @@ mainPinMarker.addTo(map)
     addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
   });
 
-// const getLatLng = (data) => {
-//   let location;
-//   data.forEach(item => {
-//     location = item.location;
-//   });
-//   return location;
-// };
-
 //Offers pins
-const createPins = (offers) => {
-  const { lat, lng } = offers.location;
-  const marker = L.marker(
-    {
-      lat,
-      lng,
-    },
-    {
-      icon: pinIcon,
-    },
-    {
-      keepInView: true,
-    },
-  );
+const markerGroup = L.layerGroup().addTo(map);
+const removeLayer = () => markerGroup.clearLayers();
 
-  marker.addTo(map)
-    .bindPopup(
-      renderOffer(offers),
+const createPins = (offers) => {
+  removeLayer();
+  offers.slice(0, ADVT_MARKERS_COUNT).forEach(offer => {
+    const { lat, lng } = offer.location;
+    const marker = L.marker(
+      {
+        lat,
+        lng,
+      },
+      {
+        icon: pinIcon,
+      },
+      {
+        keepInView: true,
+      },
     );
 
+    marker
+      .addTo(markerGroup)
+      .bindPopup(
+        renderOffer(offer),
+      );
+  });
 };
 
-export { setMainPinMarker, createPins };
+const resetMap = () => {
+  map.setView(
+    {
+      lat: 35.7065030935718,
+      lng: 139.7042938163505,
+    }, 10);
+  mainPinMarker.setLatLng(
+    {
+      lat: 35.7065030935718,
+      lng: 139.7042938163505,
+    },
+  );
+};
+
+export { setMainPinMarker, createPins, resetMap };
